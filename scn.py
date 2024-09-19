@@ -5,7 +5,7 @@ import subprocess
 
 class menu:
     def __init__(self):
-        self.path = "awesome-bugbounty-tools/README.md"
+        self.path = "README.md"
 
     def list_tools(self):
         print("\n########## Tools ##########\n")
