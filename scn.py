@@ -1,15 +1,13 @@
 import os
 import subprocess
 
-
-
 class menu:
     def __init__(self):
         self.path = "README.md"
 
     def list_tools(self):
         print("\n########## Tools ##########\n")
-        tools = []  # Para armazenar as ferramentas e seus links
+        tools = []
         try:
             with open(self.path, "r") as file:
                 lines = file.readlines()
@@ -18,13 +16,12 @@ class menu:
                 print("[WARNING] The file is empty.")
                 return
             
-            id_counter = 1  # Começa a contagem em 1
-            tools_found = False  # Para rastrear se alguma ferramenta foi encontrada
+            id_counter = 1
+            tools_found = False
             
             for line in lines:
                 line = line.strip()
                 if line.startswith('- [') and '](' in line:
-                    # Extrai o nome e o link da ferramenta
                     start_bracket = line.index('[') + 1
                     end_bracket = line.index(']')
                     tool_name = line[start_bracket:end_bracket]
@@ -33,17 +30,13 @@ class menu:
                     end_parenthesis = line.index(')')
                     tool_link = line[start_parenthesis:end_parenthesis]
 
-                    # Extrai a descrição
                     description = line[end_parenthesis + 1:].strip().lstrip('- ')
-
-                    # Armazena a ferramenta e seu link
                     tools.append((id_counter, tool_name, tool_link, description))
 
-                    # Códigos ANSI para cor amarela
                     yellow = "\033[93m"
                     reset = "\033[0m"
                     
-                    print(f'{yellow}[{id_counter}]{reset} {tool_name} ({tool_link}) - {description}')  # Imprime ID, nome, link e descrição
+                    print(f'{yellow}[{id_counter}]{reset} {tool_name} ({tool_link}) - {description}')
                     tools_found = True
                     id_counter += 1
             
@@ -52,25 +45,49 @@ class menu:
                 return
             
             while True:
-                install_tools = input("\nDo you wish to install some tool?\n1. Yes\n2. No\nAnswer (1 or 2): ")
-                if install_tools == "1":  # Corrigido para comparar com string
+                install_tools = input("\nDo you wish to install some tool?\n1. Yes\n2. Search for a tool\n3. No\nAnswer (1, 2 or 3): ")
+                if install_tools == "1":
                     tool_number = input("\nType number of the tool: ")
                     try:
                         tool_number = int(tool_number)
-                        # Verifica se o número está na lista de ferramentas
                         if 1 <= tool_number < id_counter:
-                            selected_tool = tools[tool_number - 1]  # Acessa a ferramenta selecionada
-                            github_link = selected_tool[2]  # URL do GitHub
-                            subprocess.run(f"git clone {github_link}", shell=True)  # Clona o repositório
+                            selected_tool = tools[tool_number - 1]
+                            github_link = selected_tool[2]
+                            subprocess.run(f"git clone {github_link}", shell=True)
                         else:
                             print("[ERROR] Invalid tool number.")
                     except ValueError:
                         print("[ERROR] Please enter a valid number.")
+
                 elif install_tools == "2":
-                    break
-                else:
-                    print("[ERROR] Please choose 1 or 2.")
-                
+                    tool_name = input("Type your tool: ")
+                    search_result = subprocess.run(f"cat README.md | grep '{tool_name}'", shell=True, capture_output=True, text=True)
+
+                    if search_result.stdout:
+                        print("\nSearch results:\n")
+                        for idx, line in enumerate(search_result.stdout.splitlines(), start=1):
+                            yellow = "\033[93m"
+                            reset = "\033[0m"
+                            print(f"{yellow}[{idx}]{reset} {line}")
+
+                        selected_index = input("\nType the number of the tool you want to install: ")
+                        try:
+                            selected_index = int(selected_index)
+                            if 1 <= selected_index <= len(search_result.stdout.splitlines()):
+                                chosen_tool = search_result.stdout.splitlines()[selected_index - 1]
+                                tool_link = chosen_tool.split('(')[1].split(')')[0]
+                                subprocess.run(f"git clone {tool_link}", shell=True)
+
+                            else:
+                                print("[ERROR] Invalid selection.")
+                        except ValueError:
+                            print("[ERROR] Please enter a valid number.")
+
+                    elif install_tools == "3":
+                        break
+                    else:
+                        print("[ERROR] Please choose 1, 2 or 3.")
+                    
         except FileNotFoundError:
             print("[ERROR] The specified file was not found.")
         except Exception as e:
@@ -86,7 +103,6 @@ Type one:
 2 Whois, Dns transfer zone and Dnsenum;
 3 Check and install tools;
 4 exit.
-
 
 ==============================\n
 """))
@@ -120,16 +136,11 @@ Type one:
             else:
                 print("Invalid answer")
 
-
 def nmap_scan():
-
     try:
-        #########      USE "#" TO COMENT SOME SCAN      ##########
-
         subprocess.run(f"nmap -sP {ip} | grep 'Nmap scan report for' | cut -d ' ' -f 5 > {dir}/ips.txt", shell=True)
         subprocess.run(f"cat {dir}/ips.txt", shell=True)
         print("\n========== Ip list result  ==========\n")
-
 
         subprocess.run(f"nmap -Pn --script=default -iL {dir}/ips.txt > {dir}/default.txt", shell=True) 
         subprocess.run(f"cat {dir}/default.txt", shell=True)
@@ -157,7 +168,6 @@ def nmap_scan():
 
         print("\n[!]  Nmap scan completed!!!\n ")
 
-
         while True:
             try:
                 ask = int(input(""""###############
@@ -181,10 +191,8 @@ Do you want to exit?
     except FileNotFoundError as e:
         print("[ERROR!] Not found file ips.txt: ", e)
 
-
 def dns_enum():
     try:
-        ###### dnsenum #######
         standart = "/usr/share/dnsenum/dns.txt"
         print("======== Type enter for default wordlist dnsenum on Linux. ==========")
         wordlist = str(input("[!] Type wordlist complete path(Standart dnsenum-wordlist = /usr/share/dnsenum/dns.txt): "))
@@ -203,7 +211,6 @@ def whois_dns():
     try:
        subprocess.run(f"whois {ip} | grep 'Name Server:' | cut -d ' ' -f 3 > {dir}/whois.txt", shell=True)
        subprocess.run(f"cat {dir}/whois.txt", shell=True)
-       # TRYING DNS CONNECTION
        print("======== Getting information from the dns server ========")
        with open(f'{dir}/whois.txt', 'r') as file:
             for line in file:
@@ -237,8 +244,6 @@ def zone_transfer():
             print(f"Zone transfer failed with {dns_server}:\n")
             print(result.stderr)
 
-
-
 try:
     ip = input("Ip: ")
     dir = input("Dir_name: ")
@@ -251,8 +256,6 @@ try:
 except Exception as e:
     print("Invalid ip address or failed to make directory: ", e)
 
-
-
 system = menu()
-
 system.panel()
+
