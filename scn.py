@@ -4,6 +4,78 @@ import subprocess
 
 
 class menu:
+    def __init__(self):
+        self.path = "awesome-bugbounty-tools/README.md"
+
+    def list_tools(self):
+        print("\n########## Tools ##########\n")
+        tools = []  # Para armazenar as ferramentas e seus links
+        try:
+            with open(self.path, "r") as file:
+                lines = file.readlines()
+            
+            if not lines:
+                print("[WARNING] The file is empty.")
+                return
+            
+            id_counter = 1  # Começa a contagem em 1
+            tools_found = False  # Para rastrear se alguma ferramenta foi encontrada
+            
+            for line in lines:
+                line = line.strip()
+                if line.startswith('- [') and '](' in line:
+                    # Extrai o nome e o link da ferramenta
+                    start_bracket = line.index('[') + 1
+                    end_bracket = line.index(']')
+                    tool_name = line[start_bracket:end_bracket]
+                    
+                    start_parenthesis = line.index('(') + 1
+                    end_parenthesis = line.index(')')
+                    tool_link = line[start_parenthesis:end_parenthesis]
+
+                    # Extrai a descrição
+                    description = line[end_parenthesis + 1:].strip().lstrip('- ')
+
+                    # Armazena a ferramenta e seu link
+                    tools.append((id_counter, tool_name, tool_link, description))
+
+                    # Códigos ANSI para cor amarela
+                    yellow = "\033[93m"
+                    reset = "\033[0m"
+                    
+                    print(f'{yellow}[{id_counter}]{reset} {tool_name} ({tool_link}) - {description}')  # Imprime ID, nome, link e descrição
+                    tools_found = True
+                    id_counter += 1
+            
+            if not tools_found:
+                print("[WARNING] No tools found in the specified format.")
+                return
+            
+            while True:
+                install_tools = input("\nDo you wish to install some tool?\n1. Yes\n2. No\nAnswer (1 or 2): ")
+                if install_tools == "1":  # Corrigido para comparar com string
+                    tool_number = input("\nType number of the tool: ")
+                    try:
+                        tool_number = int(tool_number)
+                        # Verifica se o número está na lista de ferramentas
+                        if 1 <= tool_number < id_counter:
+                            selected_tool = tools[tool_number - 1]  # Acessa a ferramenta selecionada
+                            github_link = selected_tool[2]  # URL do GitHub
+                            subprocess.run(f"git clone {github_link}", shell=True)  # Clona o repositório
+                        else:
+                            print("[ERROR] Invalid tool number.")
+                    except ValueError:
+                        print("[ERROR] Please enter a valid number.")
+                elif install_tools == "2":
+                    break
+                else:
+                    print("[ERROR] Please choose 1 or 2.")
+                
+        except FileNotFoundError:
+            print("[ERROR] The specified file was not found.")
+        except Exception as e:
+            print(f"[ERROR] An unexpected error occurred: {e}")
+
     def panel(self):
         while True:
             panel = int(input("""\n=============== PANEL SCAN ============
@@ -12,7 +84,8 @@ Type one:
 
 1 Scan with nmap;
 2 Whois, Dns transfer zone and Dnsenum;
-3 exit.
+3 Check and install tools;
+4 exit.
 
 
 ==============================\n
@@ -37,12 +110,15 @@ Type one:
                 else: 
                     print("\n[!]Invalid answer\n")
 
-
             elif panel == 3:
+                print("\n[+] List tools selected.\n")
+                self.list_tools()
+
+            elif panel == 4:
                 print("Finishing program...")
                 break
             else:
-                answer = print("Invalid answer")
+                print("Invalid answer")
 
 
 def nmap_scan():
@@ -163,7 +239,6 @@ def zone_transfer():
 
 
 
-
 try:
     ip = input("Ip: ")
     dir = input("Dir_name: ")
@@ -175,6 +250,7 @@ try:
 
 except Exception as e:
     print("Invalid ip address or failed to make directory: ", e)
+
 
 
 system = menu()
