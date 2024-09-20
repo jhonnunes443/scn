@@ -77,25 +77,30 @@ class menu:
                                 chosen_tool = search_result.stdout.splitlines()[selected_index - 1]
                                 tool_link = chosen_tool.split('(')[1].split(')')[0]
                                 subprocess.run(f"git clone {tool_link}", shell=True)
+                                
 
                             else:
                                 print("[ERROR] Invalid selection.")
                         except ValueError:
                             print("[ERROR] Please enter a valid number.")
 
-                    elif install_tools == "3":
-                        break
-                    else:
-                        print("[ERROR] Please choose 1, 2 or 3.")
+                elif install_tools == "3":
+                    break
+        
+                else:
+                    print("[ERROR] Please choose 1, 2 or 3.")
                     
         except FileNotFoundError:
             print("[ERROR] The specified file was not found.")
         except Exception as e:
             print(f"[ERROR] An unexpected error occurred: {e}")
-
+        except KeyboardInterrupt:
+            print("[End] Finishing all processes.")
+            
     def panel(self):
-        while True:
-            panel = int(input("""\n=============== PANEL SCAN ============
+        try:
+	        while True:
+	            panel = int(input("""\n=============== PANEL SCAN ============
 
 Type one:
 
@@ -106,35 +111,38 @@ Type one:
 
 ==============================\n
 """))
+	
+	            if panel == 1:
+	                print("\n[+] Scan with nmap selected\n")
+	                nmap_scan()
+	                
+	            elif panel == 2:
+	                print("[+] Dnsenum, Whois selected\n")
+	                whois_dns()
+	                zone_transfer()
+	                enum = input("\nWould you like try to enum dns servers [y/n]?: ")
+	                if enum == "y" or "yes":
+	                    dns_enum()
+	                    print("Finishing all the processes...")
+	                    break
+	                elif enum == "n" or "no":
+	                    print("Finishing all the processes...")
+	                    break
+	                else: 
+	                    print("\n[!]Invalid answer\n")
+	
+	            elif panel == 3:
+	                print("\n[+] List tools selected.\n")
+	                self.list_tools()
+	
+	            elif panel == 4:
+	                print("Finishing program...")
+	                break
+	            else:
+                        print("Invalid answer")
+        except KeyboardInterrupt:
+            print("[END] Finishing all the processes...")
 
-            if panel == 1:
-                print("\n[+] Scan with nmap selected\n")
-                nmap_scan()
-                
-            elif panel == 2:
-                print("[+] Dnsenum, Whois selected\n")
-                whois_dns()
-                zone_transfer()
-                enum = input("\nWould you like try to enum dns servers [y/n]?: ")
-                if enum == "y" or "yes":
-                    dns_enum()
-                    print("Finishing all the processes...")
-                    break
-                elif enum == "n" or "no":
-                    print("Finishing all the processes...")
-                    break
-                else: 
-                    print("\n[!]Invalid answer\n")
-
-            elif panel == 3:
-                print("\n[+] List tools selected.\n")
-                self.list_tools()
-
-            elif panel == 4:
-                print("Finishing program...")
-                break
-            else:
-                print("Invalid answer")
 
 def nmap_scan():
     try:
