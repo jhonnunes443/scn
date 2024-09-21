@@ -458,6 +458,23 @@ Lorem ipsum dolor sit amet
 - [XFFenum](https://github.com/vavkamil/XFFenum) - X-Forwarded-For [403 forbidden] enumeration
 - [httpx](https://github.com/projectdiscovery/httpx) - httpx is a fast and multi-purpose HTTP toolkit allow to run multiple probers using retryablehttp library, it is designed to maintain the result reliability with increased threads.
 - [csprecon](https://github.com/edoardottt/csprecon) - Discover new target domains using Content Security Policy 
+- [Mr.homes](https://github.com/Lucksi/Mr.Holmes.git) - Mr Holmes is a information gathering tool (OSINT). The main purpose is to gain information about domains,username and phone numbers with the help of public source avaiable on the internet also it use the google dorks attack for specific researchers. It also use proxies for make your requests completley anonymous and a WhoIS Api for getting more information about a domain.
+- [sherlock](https://github.com/sherlock-project/sherlock.git) - Hunt down social media accounts by username across social [OSINT]
+- [exiftool](https://github.com/exiftool/exiftool.git) - ExifTool is a customizable set of Perl modules plus a full-featured command-line application for reading and writing meta information in a wide variety of files, including the maker note information of many digital
+cameras by various manufacturers such as Canon, Casio, DJI, FLIR, FujiFilm, GE, HP, JVC/Victor, Kodak, Leaf, Minolta/Konica-Minolta, Nikon, Nintendo, Olympus/Epson, Panasonic/Leica, Pentax/Asahi, Phase One, Reconyx, Ricoh, Samsung, Sanyo, Sigma/Foveon and Sony.
+- [aircrack-ng](https://github.com/aircrack-ng/aircrack-ng.git) - Aircrack-ng is a complete suite of tools to assess WiFi network security.
+- [routersploit](https://github.com/Exploit-install/routersploit.git) - The RouterSploit Framework is an open-source exploitation framework dedicated to embedded devices.
+- [pompem](https://github.com/rfunix/Pompem.git) - Pompem is an open source tool, designed to automate the search for Exploits and Vulnerability in the most important databases. 
+- [Google-Hacking-Database](https://github.com/readloud/Google-Hacking-Database.git) - Google Dorking describes the process of using advanced search filters that allow to retrieve more efficient results. It is a technique often used by cybersecurity professionals in order to find valuable information about a target. While Google Dorking itself is legal (in most countries), it might quickly lead to actions that aren't, such as visiting a site with illegal content in it. Hence using TOR or a VPN is recommended. It is also beneficial to use a search aggregator like SearX.
+- [Security_folder](https://github.com/jhonnunes443/Security_folder.git) - This is a project with a variety of scripts as reverse_shell, keyloggers, scans and file open cam.
+- [sniper](https://github.com/1N3/Sn1per.git) - Attack Surface Management Platform 
+- [xsstrike](https://github.com/s0md3v/XSStrike.git) - XSStrike is a Cross Site Scripting detection suite equipped with four hand written parsers, an intelligent payload generator, a powerful fuzzing engine and an incredibly fast crawler.
+- [wordlist-generator](https://github.com/retr00exe/wordlist-generator.git) - Automated crunch program to generate wordlist with numbers pattern. Works using linux terminal and WSL ubuntu.
+- [NumNinja-Numeric-Wordlist-Generator](https://github.com/SHUR1K-N/NumNinja-Numeric-Wordlist-Generator.git) - A super fast number dictionary generator (2M+ lines per second) to aid numeric dictionary-based attacks. This project uses multiprocessing and has both versions — graphical UI and console UI.
+- [setoolkit-engineering](https://github.com/mwsrc/SEToolkit-Mod.git) - Social Engineering Toolkit 
+- [proxychains](https://github.com/haad/proxychains.git) - proxychains - a tool that forces any TCP connection made by any given application to follow through proxy like TOR or any other SOCKS4, SOCKS5 or HTTP(S) proxy. Supported auth-types: "user/pass" for SOCKS4/5, "basic" for HTTP. 
+- [tor-browser-selenium](https://github.com/webfp/tor-browser-selenium.git) - Tor Browser automation with Selenium. 
+
 
 ---
 
