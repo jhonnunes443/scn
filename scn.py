@@ -53,7 +53,7 @@ class menu:
                         if 1 <= tool_number < id_counter:
                             selected_tool = tools[tool_number - 1]
                             github_link = selected_tool[2]
-                            subprocess.run(f"git clone {github_link}", shell=True)
+                            subprocess.run(f"cd $HOME && git clone {github_link}", shell=True)
                         else:
                             print("[ERROR] Invalid tool number.")
                     except ValueError:
