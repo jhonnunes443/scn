@@ -548,7 +548,7 @@ List of pentesting tools and wordlists for your setup, this repository count wit
 
 ## Author
 
-jhonnunes443 - [jhonnunes443](https://github.com/jhonnunes443/)
+[jhonnunes443](https://github.com/jhonnunes443/)
 
 
 
