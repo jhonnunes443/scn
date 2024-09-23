@@ -542,14 +542,14 @@ cameras by various manufacturers such as Canon, Casio, DJI, FLIR, FujiFilm, GE, 
 
 
 
-# Project Name
+# scn 
 
+List of pentesting tools and wordlists for your setup, this repository count with automatizated tools as nmap, gobuster, whois and more.
 
+## Author
 
-## Authors
+jhonnunes443 - [jhonnunes443](https://github.com/jhonnunes443/)
 
-- jhonnunes443 - jhonnunes443 - https://github.com/jhonnunes443/
-- gmelodie - gmelodie  - https://github.com/gmelodie/
 
 
 
