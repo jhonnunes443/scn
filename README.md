@@ -60,6 +60,9 @@
 - [iam-py-test](https://github.com/iam-py-test/)
 - [itsmohitnarayan](https://github.com/itsmohitnarayan/)
 
+- [CrackMapExec](https://github.com/byt3bl33d3r/CrackMapExec.git) - A swiss army knife for pentesting networks
+- [Sherlock](https://github.com/sherlock-project/sherlock.git) - Hunt down social media accounts by username across social networks.
+- [Nuclei](https://github.com/projectdiscovery/nuclei.git) - Fast and customizable vulnerability scanner based on simple YAML based DSL.
 - [Sublist3r](https://github.com/aboul3la/Sublist3r) - Fast subdomains enumeration tool for penetration testers
 - [Amass](https://github.com/OWASP/Amass) - In-depth Attack Surface Mapping and Asset Discovery
 - [massdns](https://github.com/blechschmidt/massdns) - A high-performance DNS stub resolver for bulk lookups and reconnaissance (subdomain enumeration)
