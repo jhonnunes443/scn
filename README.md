@@ -32,6 +32,7 @@
 - [NoSQL-Injection Wordlist](https://github.com/cr0hn/nosqlinjection_wordlists/blob/master/mongodb_nosqli.txt) - List of payloads to test NoSQL Injections.
 
 ## Portuguese wordlists
+- [loncrak](https://github.com/ricardolongatto/loncrack.git ) - Brute force para senhas linux
 - [Dadoware](https://github.com/thoughtworks/dadoware) - Regular Portuguese words.
 - [words-pt](https://github.com/jfoclpf/words-pt) - Regular Portuguese words.
 - [br-wordlist](https://github.com/mmatje/br-wordlist) - Brazilian password wordlist.
