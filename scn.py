@@ -1,14 +1,44 @@
 import os
 import platform
 import subprocess
+import shutil
+import requests
 
 
 class menu:
     def __init__(self):
-        self.path = "README.md"
+        self.path = "TOOL_LIST.md"
         self.red = "\033[91m"
         self.reset = "\033[0m"
         self.yellow = "\033[93m"
+        self.urls = [
+    f"https://www.google.com/search?q={{nome}}",
+    f"https://pipl.com/search/?q={{nome}}",
+    f"https://www.spokeo.com/{{nome}}",
+    f"https://www.whitepages.com/name/{{nome}}",
+    f"https://www.beenverified.com/search/{{nome}}",
+    f"https://www.intelius.com/results/{{nome}}",
+    f"https://www.peoplefinders.com/people/{{nome}}",
+    f"https://www.truthfinder.com/search/{{nome}}",
+    f"https://www.facebook.com/{{nome}}",
+    f"https://www.github.com/{{nome}}",
+    f"https://www.instagram.com/{{nome}}",
+    f"https://www.linkedin.com/in/{{nome}}",
+    f"https://www.zabasearch.com/{{nome}}",
+    f"https://www.familysearch.org/search/{{nome}}",
+    f"https://www.peekyou.com/{{nome}}",
+    f"https://www.social-searcher.com/social-media-search/{{nome}}",
+    f"https://www.govrecords.org/search/{{nome}}",
+    f"https://www.radaris.com/p/{{nome}}",
+    f"https://www.yandex.com/search/?text={{nome}}",
+    f"https://www.bing.com/search?q={{nome}}",
+    f"https://whois.domaintools.com/{{nome}}",
+    f"https://archive.org/web/*/{{nome}}",
+    f"https://www.reddit.com/search/?q={{nome}}",
+    f"https://www.flickr.com/search/?text={{nome}}",
+    f"https://www.quora.com/search?q={{nome}}"
+]
+        self.files = ["username.txt"]
 
     def check_platform(self):
         system = platform.system()
@@ -19,12 +49,37 @@ class menu:
 
     def clear_terminal(self):
         system = platform.system()
-        if system == "Linux" or system == "Darwin":  # MACOS
-            os.system('clear')  # Linux/Mac
+        if system == "Linux" or system == "Darwin":  
+            os.system('clear')  
         elif system == "Windows":
             os.system('cls')
 
+    def osint_search(self):
 
+        nome = input("\n* Type username for search: ")
+
+        with open(self.files[0], "a") as file:
+            for url in self.urls:
+                formatted_url = url.format(nome=nome)
+                print(f"Buscando em: {formatted_url}")
+
+                try:
+                    response = requests.get(formatted_url)
+
+                    if response.status_code == 200:
+                        print(f"[OK] Página encontrada: {formatted_url}")
+                        file.write(formatted_url + "\n")
+                        print("[+] Todas as URLs prováveis foram pesquisadas e os resultados foram registrados no arquivo usernames.txt.")
+                    elif response.status_code == 404:
+                        print(f"[404] Página não encontrada: {formatted_url}")
+                    else:
+                        print(f"[{response.status_code}] Status retornado: {formatted_url}")
+
+                except requests.exceptions.RequestException as e:
+                    print(f"[Erro] Não foi possível acessar {formatted_url}: {e}")
+
+            print("\n[+] Todas as URLs prováveis foram pesquisadas e os resultados foram registrados no arquivo usernames.txt.\n")
+ 
     def list_tools(self):
         print("""\n########## Tools ##########\n""")
         tools = []
@@ -61,7 +116,7 @@ class menu:
             if not tools_found:
                 print("[WARNING] No tools found in the specified format.")
                 return
-            
+
             while True:
                 install_tools = input("\nDo you wish to install some tool?\n1. Yes\n2. Search for a tool\n3. No\nAnswer (1, 2 or 3): ")
                 if install_tools == "1":
@@ -79,14 +134,14 @@ class menu:
 
                 elif install_tools == "2":
                     tool_name = input("Type your tool: ")
-                    search_result = subprocess.run(f"cat README.md | grep '{tool_name}'", shell=True, capture_output=True, text=True)
+                    search_result = subprocess.run(f"cat TOOL_LIST.md | grep '{tool_name}'", shell=True, capture_output=True, text=True)
 
                     if search_result.stdout:
                         print("\nSearch results:\n")
                         for idx, line in enumerate(search_result.stdout.splitlines(), start=1):
                             print(f"{self.yellow}[{idx}]{self.reset} {line}")
 
-                        selected_index = input("\nType the number of the tool you want to install: ")
+                        selected_index = input("\nType the number of the tool you want to install or just press enter: ")
                         try:
                             selected_index = int(selected_index)
                             if 1 <= selected_index <= len(search_result.stdout.splitlines()):
@@ -115,23 +170,47 @@ class menu:
             
     def panel(self):
         try:
+            print("""
+___________________________________________
+
+███████╗ ██████╗ ███╗   ██╗
+██╔════╝██╔═══   ████╗ ██╔╝
+███████╗██║      ██╔████╔╝
+╚════██║██║      ██║╚═██╔╝
+███████║╚██████╔╝██║  ██ 
+╚══════╝ ╚═════╝ ╚═╝     
+                                  
+.
+░░░░░███████ ]▄▄▄▄▄▄ `~~~~~~ ~~~~ ~~~~ ~~~
+▂▄▅████████▅▄▃ ...............
+Il███████████████████]
+◥⊙▲⊙▲⊙▲⊙▲⊙▲⊙▲⊙◤..
+
+Autor: jhonnunes443  
+Github: https://github.com/jhonnunes443/scn.git
+                  
+
+                  """)
             while True:
+
                 panel_input = input("""\n=============== PANEL SCAN ============
 
 Type one:
-
+                                    
+0 exit;
 1 Scan with nmap;
 2 Whois, Dns transfer zone and Dnsenum;
 3 Check and install tools;
 4 Install Kali-nethunter;
-5 exit.
+5 Username OSINT.                                    
+
 
 ==============================\n
 * Type one number: """)
 
 
                 if not panel_input.strip():
-                    print(f"\n{self.red[END]}{self.reset} Invalid answer, please try again.\n")
+                    print(f"\n{self.red}[END]{self.reset} Invalid answer, please try again.\n")
                     continue
 
                 try:
@@ -141,18 +220,29 @@ Type one:
                     self.clear_terminal()
                     continue
 
-                if panel == 1:
+                if panel == 0:
+                    print(f"{self.red}[!]{self.reset} Finishing program...\n")
+                    break
+
+                elif panel == 1:
+
                     print(f"\n{self.red}[+]{self.reset} Scan with nmap selected\n")
+                    print(f"\n{self.red}[+]{self.reset} Choose a name for your nmap result dir.\n")
                     nmap_scan()
 
                 elif panel == 2:
+
                     print(f"{self.red}[+]{self.reset} Dnsenum, Whois selected\n")
+
                     ip = input("Ip: ")
-                    whois_dns(ip)
-                    zone_transfer(ip)
+                    dir = input("Dir_name: ")
+
+                    whois_dns(ip, dir)
+                    zone_transfer(ip, dir)
                     enum = input(f"\nWould you like to try to enum dns servers {self.yellow}[y/n]{self.reset}?: ")
+
                     if enum.lower() in ["y", "yes"]:
-                        dns_enum(ip)
+                        dns_enum(ip, dir)
                         print(f"{self.red}[END]{self.reset} Finishing all the processes...")
                         break
                     elif enum.lower() in ["n", "no"]:
@@ -170,7 +260,6 @@ Type one:
                     tool = "wget"
                     print(f"\n{self.yellow}[+]{self.reset} Installing {tool}\n")
 
-                    # Tentativa de instalação do wget
                     try:
                         subprocess.run(f"apt install {tool} -y", shell=True, check=True)
                         print(f"\n{self.yellow}[+]{self.reset} WGET INSTALLED!\n")
@@ -182,17 +271,16 @@ Type one:
                         except subprocess.CalledProcessError:
                             print(f"Failed to install {tool}. Are you rooted?")
 
-                    # Execution of commands for Kali Nethunter
                     try:
                         subprocess.run("wget -O install-nethunter-termux https://offs.ec/2MceZWr", shell=True, check=True)
                         subprocess.run("chmod +x install-nethunter-termux", shell=True, check=True)
                         subprocess.run("./install-nethunter-termux", shell=True, check=True)
                     except Exception as e:
                         print(f"\n{self.red}[ERROR]{self.reset} Kali-nethunter is not supported on your device:", e)
-
                 elif panel == 5:
-                    print(f"{self.red}[!]{self.reset} Finishing program...\n")
-                    break
+                    self.osint_search()
+
+
                 else:
                     print(f"{self.red}[+]{self.reset} Invalid answer\n")
                     self.clear_terminal()
@@ -201,17 +289,12 @@ Type one:
             print(f"\n{self.red}[END]{self.reset} Finishing all the processes...")
 
         except ValueError:
-            print(f"\n{self.red[END]}{self.reset} Invalid answer\n")
+            print(f"\n{self.red}[END]{self.reset} Invalid answer\n")
             self.clear_terminal()
-
-
-
-
 
 
 def nmap_installation():
     try:
-        # Check if Nmap is installed
         result = subprocess.run(["nmap"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         
         if result.returncode == 0:
@@ -219,14 +302,12 @@ def nmap_installation():
         else:
             print(f"\n[+] Nmap is not installed on the device\n")
             try:
-                # Attempt to install Nmap
                 install_result = subprocess.run("apt install nmap -y", shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 print(install_result.stdout.decode())
                 print("[+] Nmap installed successfully.\n")
             except Exception as e:
                 print("\n[!] Failure to install nmap, trying with sudo...\n")
                 try:
-                    # Attempt to install Nmap with sudo
                     install_result = subprocess.run("sudo apt install nmap -y", shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                     print(install_result.stdout.decode())
                     print("[+] Nmap installed successfully with sudo.\n")
@@ -250,7 +331,17 @@ def nmap_installation():
                 print(e)
 
 def nmap_scan():
-    nmap_installation()
+    if shutil.which("nmap") is None:
+        print("[ERROR] nmap is not installed or not in PATH.")
+        nmap_installation()
+
+    dir = input("Dir_name: ")
+
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+    else:
+        print("There is already a directory called {dir}.\n")
+    
     ip = input("Ip: ")
 
     try:
@@ -266,21 +357,23 @@ def nmap_scan():
         subprocess.run(f"cat {dir}/vuln.txt", shell=True)
         print("\n========== vuln.txt created  ==========\n")
 
-#        subprocess.run(f"nmap -Pn --script smb-os-discovery -iL {dir}/ips.txt -p 445 > {dir}/smb-os-discovery.txt", shell=True)
-#        subprocess.run(f"cat {dir}/smb-os-discovery.txt", shell=True)
-#        print("\n========== smb-os-discovery.txt created  ==========\n")
+        subprocess.run(f"nmap -Pn --script smb-os-discovery -iL {dir}/ips.txt -p 445 > {dir}/smb-os-discovery.txt", shell=True)
+        subprocess.run(f"cat {dir}/smb-os-discovery.txt", shell=True)
+        print("\n========== smb-os-discovery.txt created  ==========\n")
 
-#        subprocess.run(f"nmap -Pn --script http-enum -iL {dir}/ips.txt > {dir}/http-enum.txt", shell=True)
-#        subprocess.run(f"cat {dir}/http-enum.txt", shell=True)
-#        print("\n========== http-enum.txt created  ==========\n")
+        subprocess.run(f"nmap -Pn --script http-enum -iL {dir}/ips.txt > {dir}/http-enum.txt", shell=True)
+        subprocess.run(f"cat {dir}/http-enum.txt", shell=True)
+        print("\n========== http-enum.txt created  ==========\n")
 
-#        subprocess.run(f"nmap -Pn --script ftp-anon -iL {dir}/ips.txt -p 21 > {dir}/ftp-anon.txt", shell=True)
-#        subprocess.run(f"cat {dir}/ftp-anon.txt", shell=True)
-#        print("\n========== ftp-anon.txt created  ==========\n")
+        subprocess.run(f"nmap -Pn --script ftp-anon -iL {dir}/ips.txt -p 21 > {dir}/ftp-anon.txt", shell=True)
+        subprocess.run(f"cat {dir}/ftp-anon.txt", shell=True)
+        print("\n========== ftp-anon.txt created  ==========\n")
 
-#        subprocess.run(f"nmap -Pn --script banner -sV -iL {dir}/ips.txt > {dir}/banner.txt",shell=True)
-#        subprocess.run(f"cat {dir}/banner.txt", shell=True)
-#        print("\n========== banner.txt created  ==========\n")
+        subprocess.run(f"nmap -Pn --script banner -sV -iL {dir}/ips.txt > {dir}/banner.txt",shell=True)
+        subprocess.run(f"cat {dir}/banner.txt", shell=True)
+        print("\n========== banner.txt created  ==========\n")
+
+
 
         print("\n[!]  Nmap scan completed!!!\n ")
 
@@ -307,11 +400,26 @@ Do you want to exit?
     except FileNotFoundError as e:
         print("[ERROR!] Not found file ips.txt: ", e)
 
-def dns_enum(ip):
+def dns_enum_install():
+    system = platform.system()
+
+    if system == "Linux" or system == "Darwin":
+        subprocess.run('sudo apt install dnsenum -y', shell=True, check=True, stderr=True, stdout=True, stdin=True)
+        print(f"System: {system}")
+
+    else:
+        print(f"\n[!] Unsupported format.\n")
+
+
+def dns_enum(ip, dir):
     try:
+        if shutil.which("dnsenum") is None:
+            print("[ERROR] dnsenum is not installed or not in PATH.")
+            dns_enum_install()
+        
         standart = "/usr/share/dnsenum/dns.txt"
         print("======== Type enter for default wordlist dnsenum on Linux. ==========")
-        wordlist = str(input("[!] Type wordlist complete path(Standart dnsenum-wordlist = /usr/share/dnsenum/dns.txt): "))
+        wordlist = str(input("[!] Type wordlist complete path (Standart dnsenum-wordlist = /usr/share/dnsenum/dns.txt): "))
         if wordlist == "":
             subprocess.run(f"dnsenum --enum {ip} -f {standart} > {dir}/dnsenum.txt ", shell=True)
         else:
@@ -324,9 +432,16 @@ def dns_enum(ip):
         print("[!] Error: ", e)
 
 
-def whois_dns(ip):
+def whois_dns(ip, dir):
     try:
-        # Run whois and save the name servers to a file
+        global dir_global
+        dir_global = dir  
+
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+        else:
+            print("There is already a directory called {dir}.\n")
+    
         subprocess.run(f"whois {ip} | grep 'Name Server:' | cut -d ' ' -f 3 > {dir}/whois.txt", shell=True)
         subprocess.run(f"cat {dir}/whois.txt", shell=True)
         print("======== Getting information from the DNS server ========")
@@ -338,7 +453,7 @@ def whois_dns(ip):
                     result = subprocess.run(['whois', domain], capture_output=True, text=True)
                     if result.returncode == 0:
                         with open(f"{dir}/whois_dns_connection_server.txt", "a") as file2:
-                            file2.write(result.stdout.strip() + "\n\n")  # Add newline after each result
+                            file2.write(result.stdout.strip() + "\n\n") 
                         print(f"{result.stdout}\n\n[RESULT] Connection was successful.\n")
                     else:
                         print(f"{result.stderr}\n\n[RESULT] Unsuccessful connection.\n")
@@ -348,17 +463,17 @@ def whois_dns(ip):
     except KeyboardInterrupt as e:
         print("Finishing all processes: ", e)
 
-def zone_transfer(ip):
+def zone_transfer(ip, dir):
     print("========== ZONE TRANSFER ========")
+
     dnsfile = f"{dir}/whois.txt"
     
-    # Read the DNS servers from the file
     with open(dnsfile, "r") as file3:
         dns_servers = file3.read().splitlines()
     
     for dns_server in dns_servers:
-        dns_server = dns_server.strip()  # Remove leading/trailing whitespace
-        if not dns_server:  # Skip empty lines
+        dns_server = dns_server.strip()
+        if not dns_server: 
             continue
         
         print(f"\n#Testing zone transfer with {dns_server} for domain {ip}...\n\n")
@@ -375,17 +490,7 @@ def zone_transfer(ip):
 # Example usage
 # dir = '/path/to/your/directory'  # Set your directory here
 # zone_transfer('globo.com')
-try:
 
-    dir = input("Dir_name: ")
-
-    if not os.path.exists(dir):
-        os.makedirs(dir)
-    else:
-        print("There is already a directory called {dir}.\n")
-
-except Exception as e:
-    print("Failed to make directory: ", e)
 
 system = menu()
 system.panel()
