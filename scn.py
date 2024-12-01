@@ -1,8 +1,9 @@
 import os
 import platform
+import requests
 import subprocess
 import shutil
-import requests
+
 
 
 class menu:
@@ -12,32 +13,120 @@ class menu:
         self.reset = "\033[0m"
         self.yellow = "\033[93m"
         self.urls = [
-    f"https://www.google.com/search?q={{nome}}",
-    f"https://pipl.com/search/?q={{nome}}",
-    f"https://www.spokeo.com/{{nome}}",
-    f"https://www.whitepages.com/name/{{nome}}",
-    f"https://www.beenverified.com/search/{{nome}}",
-    f"https://www.intelius.com/results/{{nome}}",
-    f"https://www.peoplefinders.com/people/{{nome}}",
-    f"https://www.truthfinder.com/search/{{nome}}",
-    f"https://www.facebook.com/{{nome}}",
-    f"https://www.github.com/{{nome}}",
-    f"https://www.instagram.com/{{nome}}",
-    f"https://www.linkedin.com/in/{{nome}}",
-    f"https://www.zabasearch.com/{{nome}}",
-    f"https://www.familysearch.org/search/{{nome}}",
-    f"https://www.peekyou.com/{{nome}}",
-    f"https://www.social-searcher.com/social-media-search/{{nome}}",
-    f"https://www.govrecords.org/search/{{nome}}",
-    f"https://www.radaris.com/p/{{nome}}",
-    f"https://www.yandex.com/search/?text={{nome}}",
-    f"https://www.bing.com/search?q={{nome}}",
-    f"https://whois.domaintools.com/{{nome}}",
-    f"https://archive.org/web/*/{{nome}}",
-    f"https://www.reddit.com/search/?q={{nome}}",
-    f"https://www.flickr.com/search/?text={{nome}}",
-    f"https://www.quora.com/search?q={{nome}}"
-]
+            f"https://www.facebook.com/{{nome}}",
+            f"https://www.twitter.com/{{nome}}",
+            f"https://www.instagram.com/{{nome}}",
+            f"https://www.linkedin.com/in/{{nome}}",
+            f"https://www.tiktok.com/@{{nome}}",
+            f"https://www.reddit.com/user/{{nome}}",
+            f"https://www.pinterest.com/{{nome}}",
+            f"https://www.snapchat.com/add/{{nome}}",
+            f"https://www.youtube.com/c/{{nome}}",
+            f"https://www.whatsapp.com/{{nome}}",
+            f"https://www.flickr.com/people/{{nome}}",
+            f"https://www.vk.com/{{nome}}",
+
+            f"https://www.google.com/search?q={{nome}}",
+            f"https://www.bing.com/search?q={{nome}}",
+            f"https://www.yahoo.com/search?q={{nome}}",
+            f"https://www.yandex.com/search/?text={{nome}}",
+            f"https://duckduckgo.com/?q={{nome}}",
+            f"https://www.ask.com/web?q={{nome}}",
+            f"https://www.startpage.com/sp/search?q={{nome}}",
+
+            f"https://www.spokeo.com/{{nome}}",
+            f"https://pipl.com/search/?q={{nome}}",
+            f"https://www.whitepages.com/name/{{nome}}",
+            f"https://www.beenverified.com/search/{{nome}}",
+            f"https://www.intelius.com/results/{{nome}}",
+            f"https://www.peoplefinders.com/people/{{nome}}",
+            f"https://www.truthfinder.com/search/{{nome}}",
+            f"https://www.zabasearch.com/{{nome}}",
+            f"https://www.peekyou.com/{{nome}}",
+            f"https://www.radaris.com/p/{{nome}}",
+
+            f"https://www.social-searcher.com/social-media-search/{{nome}}",
+            f"https://www.shodan.io/{{nome}}",
+            f"https://www.censys.io/{{nome}}",
+            f"https://www.robtex.com/{{nome}}",
+            f"https://www.securitytrails.com/{{nome}}",
+
+            f"https://www.twitch.tv/{{nome}}",
+            f"https://www.dailymotion.com/{{nome}}",
+            f"https://www.quora.com/search?q={{nome}}",
+            f"https://www.vimeo.com/{{nome}}",
+            f"https://www.meetup.com/{{nome}}",
+            f"https://www.deviantart.com/{{nome}}",
+
+            f"https://whois.domaintools.com/{{nome}}",
+            f"https://www.namecheap.com/domains/whois/{{nome}}",
+            f"https://www.godaddy.com/whois/results.aspx?domain={{nome}}",
+            f"https://who.is/whois/{{nome}}",
+            f"https://www.whois.net/whois/{{nome}}",
+
+            f"https://scholar.google.com/scholar?q={{nome}}",
+            f"https://www.researchgate.net/profile/{{nome}}",
+            f"https://www.academia.edu/{{nome}}",
+            f"https://www.orcid.org/{{nome}}",
+            f"https://www.mendeley.com/profiles/{{nome}}",
+
+            f"https://www.google.com/search?hl=en&tbm=isch&q={{nome}}",
+            f"https://www.tineye.com/search/?url={{nome}}",
+            f"https://www.pixsy.com/search/?q={{nome}}",
+            f"https://www.flickr.com/search/?text={{nome}}",
+
+            f"https://www.familysearch.org/search/{{nome}}",
+            f"https://www.ancestry.com/search/{{nome}}",
+            f"https://www.myheritage.com/research/{{nome}}",
+            f"https://www.findmypast.co.uk/records/{{nome}}",
+
+            f"https://www.backgroundchecks.org/{{nome}}",
+            f"https://www.instantcheckmate.com/{{nome}}",
+            f"https://www.checkpeople.com/{{nome}}",
+            f"https://www.truthfinder.com/search/{{nome}}",
+
+            f"https://www.govrecords.org/search/{{nome}}",
+            f"https://www.archives.gov/research/genealogy/{{nome}}",
+            f"https://www.ssa.gov/{{nome}}",
+
+            f"https://www.altavista.com/search?q={{nome}}",
+            f"https://www.excite.com/search?q={{nome}}",
+            f"https://www.hotbot.com/search?q={{nome}}",
+            f"https://www.lycos.com/search?q={{nome}}",
+
+            f"https://www.nytimes.com/search?q={{nome}}",
+            f"https://www.bbc.com/search?q={{nome}}",
+            f"https://www.cnn.com/search?q={{nome}}",
+            f"https://www.reuters.com/search/news/?blob={{nome}}",
+            f"https://www.theguardian.com/search?q={{nome}}",
+
+            f"https://www.medium.com/search?q={{nome}}",
+            f"https://www.wordpress.com/search/{{nome}}",
+            f"https://www.tumblr.com/search/{{nome}}",
+
+            f"https://www.amazon.com/s?k={{nome}}",
+            f"https://www.ebay.com/sch/i.html?_nkw={{nome}}",
+            f"https://www.etsy.com/search?q={{nome}}",
+            f"https://www.alibaba.com/countrysearch/{{nome}}",
+            f"https://www.walmart.com/search/?query={{nome}}",
+
+            f"https://www.google.com/maps?q={{nome}}",
+            f"https://www.openstreetmap.org/search?q={{nome}}",
+            f"https://www.bing.com/maps?q={{nome}}",
+
+            f"https://www.crunchbase.com/person/{{nome}}",
+            f"https://www.bloomberg.com/search?query={{nome}}",
+            f"https://www.forbes.com/search/?q={{nome}}",
+            f"https://www.manta.com/search?search={{nome}}",
+
+            f"https://www.imdb.com/find?q={{nome}}",
+            f"https://www.rottentomatoes.com/search?q={{nome}}",
+            f"https://www.fandango.com/search?q={{nome}}",
+
+            f"https://www.upwork.com/freelancers/~{{nome}}",
+            f"https://www.fiverr.com/search/gigs?query={{nome}}",
+            f"https://www.freelancer.com/search/projects?keywords={{nome}}",
+        ]
         self.files = ["username.txt"]
 
     def check_platform(self):
@@ -49,14 +138,24 @@ class menu:
 
     def clear_terminal(self):
         system = platform.system()
-        if system == "Linux" or system == "Darwin":  
+        if system == "Linux" or system == "Darwin":
             os.system('clear')  
         elif system == "Windows":
-            os.system('cls')
+            os.system('cls') 
 
     def osint_search(self):
-
         nome = input("\n* Type username for search: ")
+
+        dir = input("Dir_name: ")
+
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+        else:
+            print("There is already a directory called {dir}.\n")
+
+        if not os.path.exists(self.files[0]):
+            with open(self.files[0], "w") as file:
+                file.write("URLs pesquisadas para o nome: " + nome + "\n")
 
         with open(self.files[0], "a") as file:
             for url in self.urls:
@@ -69,7 +168,6 @@ class menu:
                     if response.status_code == 200:
                         print(f"[OK] Página encontrada: {formatted_url}")
                         file.write(formatted_url + "\n")
-                        print("[+] Todas as URLs prováveis foram pesquisadas e os resultados foram registrados no arquivo usernames.txt.")
                     elif response.status_code == 404:
                         print(f"[404] Página não encontrada: {formatted_url}")
                     else:
@@ -79,7 +177,7 @@ class menu:
                     print(f"[Erro] Não foi possível acessar {formatted_url}: {e}")
 
             print("\n[+] Todas as URLs prováveis foram pesquisadas e os resultados foram registrados no arquivo usernames.txt.\n")
- 
+
     def list_tools(self):
         print("""\n########## Tools ##########\n""")
         tools = []
@@ -188,7 +286,9 @@ Il███████████████████]
 
 Autor: jhonnunes443  
 Github: https://github.com/jhonnunes443/scn.git
-""")
+                  
+
+                  """)
             while True:
 
                 panel_input = input("""\n=============== PANEL SCAN ============
@@ -370,8 +470,6 @@ def nmap_scan():
         subprocess.run(f"nmap -Pn --script banner -sV -iL {dir}/ips.txt > {dir}/banner.txt",shell=True)
         subprocess.run(f"cat {dir}/banner.txt", shell=True)
         print("\n========== banner.txt created  ==========\n")
-
-
 
         print("\n[!]  Nmap scan completed!!!\n ")
 
