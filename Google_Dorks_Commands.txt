@@ -1,0 +1,57 @@
+intitle:"Nome Sobrenome"
+Objetivo: Encontrar páginas que possuem o nome da pessoa no título.
+
+
+intext:"Nome Sobrenome"
+Objetivo: Encontrar páginas que mencionam o nome da pessoa em seu conteúdo.
+
+
+inurl:"Nome Sobrenome"
+Objetivo: Encontrar páginas onde o nome aparece na URL.
+
+
+site:linkedin.com "Nome Sobrenome"
+site:twitter.com "Nome Sobrenome"
+site:facebook.com "Nome Sobrenome"
+Objetivo: Buscar perfis de redes sociais de uma pessoa ou empresa, como LinkedIn, Twitter, Facebook, etc.
+
+
+intitle:"Curriculum Vitae" "Nome Sobrenome"
+Objetivo: Encontrar currículos ou CVs de uma pessoa.
+
+
+filetype:pdf "Nome Sobrenome" resume
+intitle:"Curriculum Vitae" "John Doe"
+
+
+"Nome Sobrenome" email
+"Nome Sobrenome" "contact me"
+"John Doe" "contact me"
+Objetivo: Encontrar e-mails públicos associados ao nome de uma pessoa.
+
+
+inurl:blog "Nome Sobrenome"
+Objetivo: Encontrar artigos, notícias ou menções a uma pessoa ou organização em blogs ou sites de notícias.
+
+
+filetype:pdf "Nome Sobrenome"
+filetype:doc "Nome Sobrenome"
+Objetivo: Encontrar documentos públicos como PDFs, apresentações ou outros documentos que mencionam o nome.
+
+
+"Nome Sobrenome" "Nome da Empresa"
+Objetivo: Buscar menções a uma pessoa e sua associação a uma empresa ou organização.
+
+
+"Nome Sobrenome" site:.com
+site:github.com "Nome Sobrenome"
+site:gitlab.com "Nome Sobrenome"
+Objetivo: Encontrar informações associadas ao nome de domínio registrado (via WHOIS).
+
+
+site:reddit.com "Nome Sobrenome"
+site:quora.com "Nome Sobrenome"
+Objetivo: Encontrar discussões ou postagens em fóruns sobre uma pessoa ou organização.
+
+
+
