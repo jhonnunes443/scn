@@ -188,9 +188,7 @@ Il███████████████████]
 
 Autor: jhonnunes443  
 Github: https://github.com/jhonnunes443/scn.git
-                  
-
-                  """)
+""")
             while True:
 
                 panel_input = input("""\n=============== PANEL SCAN ============
