@@ -17,6 +17,24 @@ Github: https://github.com/jhonnunes443/scn.git
                   
 SCN - Automação de Scan para Descoberta de Serviços, Versões e Vulnerabilidades e instalação de ferramentas
 
+INSTALAÇÃO -
+
+pip install -r requirements.txt
+
+Ferramentas para funcionamento do programa:
+
+-Ter o Python instalado;
+
+-Nmap;
+
+-Whois;
+
+-Ferramenta Host(Linux);
+
+-Dnsenum(Linux).
+
+
+
 O SCN tem como objetivo facilitar a descoberta de serviços, versões e vulnerabilidades em servidores e redes de internet. Através do uso de ferramentas poderosas como Nmap, Dnsenum, Whois e outras, a ferramenta permite realizar uma análise detalhada da infraestrutura de rede e servidores.
 
 O projeto contém uma biblioteca de 394 ferramentas categorizadas, incluindo opções de pesquisa por tipo de ataque, como:
