@@ -5,8 +5,7 @@
 - [Awesome lists about all kinds of interesting topics](https://github.com/sindresorhus/awesome) - A repository that includes lists about all kinds of interesting topics in technology.
 
 ## Enumeration
-- [Dirbuster Wordlists](https://github.com/3ndG4me/KaliLists/tree/master/dirbuster) - Dirbuster's default directories wordlists.
-- [Dirb Wordlists](https://github.com/3ndG4me/KaliLists/tree/master/dirb) - Dirb's default wordlists.
+- [Dirbuster Wordlists](https://github.com/3ndG4me/KaliLists/) - Dirbuster's default directories wordlists.
 - [ws-dirs](https://github.com/3ndG4me/KaliLists/blob/master/wfuzz/webservices/ws-dirs.txt) - wfuzz webservices directories' wordlist.
 - [ws-files](https://github.com/3ndG4me/KaliLists/blob/master/wfuzz/webservices/ws-files.txt) - wfuzz webservices files' wordlist.
 - [Directories](https://github.com/xajkep/wordlists/blob/master/discovery/directory_only_one.small.txt) - xajkep's directories wordlist.
