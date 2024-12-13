@@ -8,7 +8,7 @@ import shutil
 
 class menu:
     def __init__(self):
-        self.path = "TOOL_LIST.md"
+        self.path = "Files/TOOL_LIST.md"
         self.red = "\033[91m"
         self.reset = "\033[0m"
         self.yellow = "\033[93m"
