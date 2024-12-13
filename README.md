@@ -17,7 +17,7 @@ Github: https://github.com/jhonnunes443/scn.git
                   
 SCN - Automação de Scan para Descoberta de Serviços, Versões e Vulnerabilidades e instalação de ferramentas
 
-#INSTALAÇÃO -
+# INSTALAÇÃO -
 
 pip install -r requirements.txt
 
