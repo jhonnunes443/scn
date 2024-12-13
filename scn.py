@@ -127,6 +127,13 @@ class menu:
             f"https://www.fiverr.com/search/gigs?query={{nome}}",
             f"https://www.freelancer.com/search/projects?keywords={{nome}}",
         ]
+        self.wordlists = [
+            'wordlists/dirbuster/directory-list-1.0.txt',
+            'wordlists/dirbuster/directory-list-2.3-medium.txt',
+            'wordlists/dirbuster/directory-list-2.3-small.txt',
+            'wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt',
+            'wordlists/dirbuster/directory-list-lowercase-2.3-small.txt',
+        ]
         self.files = ["username.txt"]
 
     def check_platform(self):
@@ -177,6 +184,86 @@ class menu:
                     print(f"[Erro] Não foi possível acessar {formatted_url}: {e}")
 
             print("\n[+] Todas as URLs prováveis foram pesquisadas e os resultados foram registrados no arquivo usernames.txt.\n")
+
+
+    def panel_gobuster(self):
+        while True:
+            try:
+                pannel = int(input("""\n==============
+
+------------ GOBUSTER PANEL -------------
+
+0. EXIT;
+1. PAGES ENUMERATION | DIRS;
+2. SUBDOMAIN; 
+
+
+=============
+
+Number: """))
+
+                if pannel == 0:
+                    exit()
+
+                url = input("url: ")
+                dir = "results"
+
+        
+                if pannel == 1:
+                    print("[+] PAGES ENUMERATION | DIRS SELECTED.")
+
+                    self.gobuster_dirs(url, dir)
+
+                elif pannel == 2:
+                    self.gobuster_subdomains(url, dir)
+
+                else:
+                    print("\n[!] Invalid number or charater, try again!\n\n")
+
+
+            except ValueError:
+                print("\n[!] Invalid character, only numbers are allowed!\n\n")
+
+    def gobuster_dirs(self, url, dir):
+
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+        else:
+            print(f"There is already a directory called {dir}.\n")
+
+        global wordlists
+    
+        wordlist_type = int(input("""
+Which kind of wordlist is the best for you?\n\n
+1. directory-list-1.0.txt\n
+2. directory-list-2.3-medium.txt\n
+3. directory-list-2.3-medium.txtdirectory-list-2.3-medium.txt\n
+4. KaliLists/dirbuster/directory-list-lowercase-2.3-medium.txt\n
+5. KaliLists/dirbuster/directory-list-lowercase-2.3-small.txt\n
+
+Number: """
+    ))
+
+        if wordlist_type ==  1:
+            subprocess.run(f'gobuster dir -u https://{url} -w {self.wordlists[0]} > results/pages.txt',shell=True,stdin=True,stderr=True,stdout=True)
+        elif wordlist_type ==  2:
+            subprocess.run(f'gobuster dir -u https://{url} -w {self.wordlists[1]} > results/pages.txt',shell=True,stdin=True,stderr=True,stdout=True)
+        elif wordlist_type ==  3:
+            subprocess.run(f'gobuster dir -u https://{url} -w {self.wordlists[2]} > results/pages.txt',shell=True,stdin=True,stderr=True,stdout=True)
+        elif wordlist_type ==  4:
+            subprocess.run(f'gobuster dir -u https://{url} -w {self.wordlists[3]} > results/pages.txt',shell=True,stdin=True,stderr=True,stdout=True)
+        elif wordlist_type ==  5:
+            subprocess.run(f'gobuster dir -u https://{url} -w {self.wordlists[4]} > results/pages.txt',shell=True,stdin=True,stderr=True,stdout=True)
+
+
+    def gobuster_subdomains(self,url):
+        try:
+            #gobuster dns -d example.com -w /caminho/para/wordlist.txt 
+            print("\n[+] Finding domains...\n\n")
+            subprocess.run(f"gobuster dns -d {url} -w wordlists/dns/subdomains-top1million-110000.txt > subdomains.txt",shell=True,check=True,stdin=True,stderr=True,stdout=True)
+            print("\n[!] Subdomains registered on subdomains.txt, ending program.\n")
+        except KeyboardInterrupt:
+            print("[!] Finishing program...")
 
     def list_tools(self):
         print("""\n########## Tools ##########\n""")
@@ -300,7 +387,8 @@ Type one:
 2 Whois, Dns transfer zone and Dnsenum;
 3 Check and install tools;
 4 Install Kali-nethunter;
-5 Username OSINT.                                    
+5 Username OSINT;
+6 Gobuster Dirs | Subdomains.                        
 
 
 ==============================\n
@@ -377,6 +465,9 @@ Type one:
                         print(f"\n{self.red}[ERROR]{self.reset} Kali-nethunter is not supported on your device:", e)
                 elif panel == 5:
                     self.osint_search()
+
+                elif panel == 6:
+                    self.panel_gobuster()
 
 
                 else:
