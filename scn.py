@@ -231,9 +231,11 @@ Number: """))
         else:
             print(f"There is already a directory called {dir}.\n")
 
-        global wordlists
-    
-        wordlist_type = int(input("""
+        try:
+
+            global wordlists
+        
+            wordlist_type = int(input("""
 Which kind of wordlist is the best for you?\n\n
 1. directory-list-1.0.txt\n
 2. directory-list-2.3-medium.txt\n
@@ -242,28 +244,40 @@ Which kind of wordlist is the best for you?\n\n
 5. KaliLists/dirbuster/directory-list-lowercase-2.3-small.txt\n
 
 Number: """
-    ))
+        ))
 
-        if wordlist_type ==  1:
-            subprocess.run(f'gobuster dir -u https://{url} -w {self.wordlists[0]} > results/pages.txt',shell=True,stdin=True,stderr=True,stdout=True)
-        elif wordlist_type ==  2:
-            subprocess.run(f'gobuster dir -u https://{url} -w {self.wordlists[1]} > results/pages.txt',shell=True,stdin=True,stderr=True,stdout=True)
-        elif wordlist_type ==  3:
-            subprocess.run(f'gobuster dir -u https://{url} -w {self.wordlists[2]} > results/pages.txt',shell=True,stdin=True,stderr=True,stdout=True)
-        elif wordlist_type ==  4:
-            subprocess.run(f'gobuster dir -u https://{url} -w {self.wordlists[3]} > results/pages.txt',shell=True,stdin=True,stderr=True,stdout=True)
-        elif wordlist_type ==  5:
-            subprocess.run(f'gobuster dir -u https://{url} -w {self.wordlists[4]} > results/pages.txt',shell=True,stdin=True,stderr=True,stdout=True)
+            if wordlist_type ==  1:
+                subprocess.run(f'gobuster dir -u https://{url} -w {self.wordlists[0]} > results/pages.txt',shell=True,stdin=True,stderr=True,stdout=True)
+            elif wordlist_type ==  2:
+                subprocess.run(f'gobuster dir -u https://{url} -w {self.wordlists[1]} > results/pages.txt',shell=True,stdin=True,stderr=True,stdout=True)
+            elif wordlist_type ==  3:
+                subprocess.run(f'gobuster dir -u https://{url} -w {self.wordlists[2]} > results/pages.txt',shell=True,stdin=True,stderr=True,stdout=True)
+            elif wordlist_type ==  4:
+                subprocess.run(f'gobuster dir -u https://{url} -w {self.wordlists[3]} > results/pages.txt',shell=True,stdin=True,stderr=True,stdout=True)
+            elif wordlist_type ==  5:
+                subprocess.run(f'gobuster dir -u https://{url} -w {self.wordlists[4]} > results/pages.txt',shell=True,stdin=True,stderr=True,stdout=True)
 
+        except KeyboardInterrupt:
+            print("\n[!] Finishing program...")
+        except Exception as e:
+            print("\n[!] Failure to execute the program: ", e)
 
-    def gobuster_subdomains(self,url):
+    def gobuster_subdomains(self,url,dir):
+
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+        else:
+            print(f"There is already a directory called {dir}.\n")
+
         try:
             #gobuster dns -d example.com -w /caminho/para/wordlist.txt 
             print("\n[+] Finding domains...\n\n")
-            subprocess.run(f"gobuster dns -d {url} -w wordlists/dns/subdomains-top1million-110000.txt > subdomains.txt",shell=True,check=True,stdin=True,stderr=True,stdout=True)
-            print("\n[!] Subdomains registered on subdomains.txt, ending program.\n")
+            subprocess.run(f"gobuster dns -d {url} -w wordlists/dns/subdomains-top1million-110000.txt > results/subdomains.txt",shell=True,check=True,stdin=True,stderr=True,stdout=True)
+            print("\n[!] Subdomains registered on results/subdomains.txt, ending program.\n")
         except KeyboardInterrupt:
-            print("[!] Finishing program...")
+            print("\n[!] Finishing program...")
+        except Exception as e:
+            print("\n[!] Failure to execute the program: ", e)
 
     def list_tools(self):
         print("""\n########## Tools ##########\n""")
