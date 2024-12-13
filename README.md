@@ -31,7 +31,9 @@ Ferramentas para funcionamento do programa:
 
 -Ferramenta Host(Linux);
 
--Dnsenum(Linux).
+-Dnsenum(Linux);
+
+-Gobuster.
 
 
 
