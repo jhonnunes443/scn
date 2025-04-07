@@ -333,7 +333,7 @@ Number: """
 
                 elif install_tools == "2":
                     tool_name = input("Type your tool: ")
-                    search_result = subprocess.run(f"cat TOOL_LIST.md | grep '{tool_name}'", shell=True, capture_output=True, text=True)
+                    search_result = subprocess.run(f"cat Files/TOOL_LIST.md | grep '{tool_name}'", shell=True, capture_output=True, text=True)
 
                     if search_result.stdout:
                         print("\nSearch results:\n")
